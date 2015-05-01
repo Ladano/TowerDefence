@@ -1,0 +1,32 @@
+[Bb]uilds
+[Bb]undles
+
+# =============== #
+# Unity generated #
+# =============== #
+[Ll]ibrary/
+/[Tt]emp/
+[Oo]bj/
+[Uu]nityGenerated/
+ 
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+ExportedObj/
+*.svd
+*.userprefs
+*.csproj
+*.pidb
+*.suo
+*.sln
+*.user
+*.unityproj
+*.booproj
+ 
+# ============ #
+# OS generated #
+# ============ #
+Thumbs.db
+/Assets/UnityTestTools/Examples
+/Assets/UnityVS/Editor/UnityVS.VersionSpecific.dll.meta
+/Assets/UnityVS/Editor/UnityVS.VersionSpecific.dll
