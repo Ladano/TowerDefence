@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 
@@ -12,7 +13,7 @@ namespace Assets.Scripts.Com.Game
 		private static GameManager _instance;
 		[SerializeField] private GameObject _bulletPrefab;
 		[SerializeField] private float _gameTime;
-		[SerializeField] private TextMesh _timerLabel;
+		[SerializeField] private Text _timerLabel;
 		private float _gameTimer;
 		private bool _isGameInProgress = false;
 
@@ -68,7 +69,7 @@ namespace Assets.Scripts.Com.Game
 			if(_isGameInProgress)
 			{
 				_gameTimer += Time.deltaTime;
-				_timerLabel.text = (Mathf.Round(_gameTime - _gameTimer)).ToString();
+				_timerLabel.text = string.Format("Осталось времени: {0}",  (Mathf.Round(_gameTime - _gameTimer)).ToString());
 				if(_gameTimer>_gameTime)
 				{
 					WinGame();
