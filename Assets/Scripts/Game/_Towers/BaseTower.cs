@@ -7,6 +7,8 @@ namespace Assets.Scripts.Com.Game
 {
 	public class BaseTower : MonoBehaviour
 	{
+		[SerializeField] private AbstractGetAllTargets _getAllTargets;
+		[SerializeField] private AbstractGetTargetToFire _getTargetToFire;
 		private float _fireSpeed;
 		private float _fireDamage;
 		private float _fireDistance;
@@ -35,42 +37,8 @@ namespace Assets.Scripts.Com.Game
 			enemy.GettingDamage(_fireDamage);
 		}
 
-		private void Update()
+		private void FireCooldown()
 		{
-			if(_enableToFire)
-			{
-				List<RaycastHit> hits = Physics.SphereCastAll(transform.position, _fireDistance, Vector3.forward)
-					.Where( a => a.collider.CompareTag(GameTags.EnemyTag) )
-					.ToList();
-
-				//если в радиусе есть противники ищем находящегося в зоне стрельбы
-				//и при этом ближайшего к обороняемой зоне и стреляем по нему
-				if(hits.Count>0)
-				{
-
-					RaycastHit hit = hits[0];
-					for(int i = 1; i<hits.Count; i++)
-					{
-						if(hit.transform.position.x>hits[i].transform.position.x)
-						{
-							hit = hits[i];
-						}
-					}
-
-					BaseEnemy enemy = hit.transform.GetComponent<BaseEnemy>();
-					if(enemy!=null)
-					{
-						Fire(enemy);
-					}
-					else
-					{
-						Debug.LogException(new System.Exception("Missing BaseEnemy script on Enemy"));
-					}
-
-				}
-			}
-
-			//обратный отсчет стрельбы
 			if(!_enableToFire)
 			{
 				_currentFireCooldown -= Time.deltaTime;
@@ -81,6 +49,31 @@ namespace Assets.Scripts.Com.Game
 					_enableToFire = true;
 				}
 			}
+		}
+
+		private void Update()
+		{
+			if(_enableToFire)
+			{
+				List<RaycastHit> hits = _getAllTargets.GetAllHits(_fireDistance);
+
+				//если в радиусе есть противники
+				if(hits.Count>0)
+				{
+					BaseEnemy enemy = _getTargetToFire.GetTargetToFire(hits);
+					if(enemy!=null)
+					{
+						Fire(enemy);
+					}
+					else
+					{
+						Debug.LogException(new System.Exception("Missing BaseEnemy script on Enemy"));
+					}
+				}
+			}
+
+			//обратный отсчет стрельбы
+			FireCooldown();
 		}
 	}
 }
