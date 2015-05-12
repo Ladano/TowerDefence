@@ -19,7 +19,7 @@ namespace Assets.Scripts.Com.Game
 			_tower.transform.parent = _buildSpot;
 			_tower.transform.localPosition = Vector3.zero;
 			_tower.transform.localScale = Vector3.one;
-			_tower.GetComponent<BaseTower>().Init(towerData.FireDamage, towerData.FireDistance, towerData.FireDistance);
+			_tower.GetComponent<BaseTower>().Init(towerData.FireSpeed, towerData.FireDamage, towerData.FireDistance);
 			GamePanel.Hide();
 		}
 	}
