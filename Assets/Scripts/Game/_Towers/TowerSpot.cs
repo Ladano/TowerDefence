@@ -6,7 +6,8 @@ namespace Assets.Scripts.Com.Game
 	public class TowerSpot : AbstractInputObject
 	{
 		[SerializeField] private Transform _buildSpot;
-		private GameObject _tower;
+		private BaseTower _tower;
+		private Transform _towerTransform;
 
 		public override void OnClick()
 		{
@@ -15,11 +16,12 @@ namespace Assets.Scripts.Com.Game
 
 		public void BuildTower(TowerData towerData)
 		{
-			_tower = Instantiate(TowersController.GetTowerPrefab(towerData.Type)) as GameObject;
-			_tower.transform.parent = _buildSpot;
-			_tower.transform.localPosition = Vector3.zero;
-			_tower.transform.localScale = Vector3.one;
-			_tower.GetComponent<BaseTower>().Init(towerData.FireSpeed, towerData.FireDamage, towerData.FireDistance);
+			_tower = TowersController.GetTowerToBuild(towerData.Type);
+			_towerTransform = _tower.transform;
+			_towerTransform.parent = _buildSpot;
+			_towerTransform.localPosition = Vector3.zero;
+			_towerTransform.localScale = Vector3.one;
+			_tower.Init(towerData.FireSpeed, towerData.FireDamage, towerData.FireDistance);
 			GamePanel.Hide();
 		}
 	}
