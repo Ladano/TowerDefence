@@ -33,7 +33,7 @@ namespace Assets.Scripts.Com.Game
 			_cachedTransform.position = moveLine.StartLineWp.position;
 			_releaseObject = releaseObject;
 			StartMove(moveLine.EndLineWp);
-			UpdateHpBar(1.0f);
+			UpdateHpBar();
 		}
 
 		/// <summary>
@@ -61,7 +61,7 @@ namespace Assets.Scripts.Com.Game
 			}
 			else
 			{
-				UpdateHpBar(_hp / _startHP);
+				UpdateHpBar();
 			}
 		}
 
@@ -91,9 +91,9 @@ namespace Assets.Scripts.Com.Game
 		/// <summary>
 		/// Updates the hp bar.
 		/// </summary>
-		private void UpdateHpBar(float percentHp)
+		private void UpdateHpBar()
 		{
-			_hpBar.localScale = new Vector3(percentHp, _hpBar.localScale.y, _hpBar.localScale.z);
+			_hpBar.localScale = new Vector3(_hp / _startHP, _hpBar.localScale.y, _hpBar.localScale.z);
 		}
 	}
 }
