@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Assets.Scripts.Com.MyInput;
 
 namespace Assets.Scripts.Com.GUI
 {
@@ -11,6 +12,7 @@ namespace Assets.Scripts.Com.GUI
 		[SerializeField] private Color _hideColor;
 		[SerializeField] private Image _blackScreen;
 		[SerializeField] private float _showTime = 0.2f;
+		[SerializeField] private SceneCamera _sceneCamera;
 
 		private void Awake()
 		{
@@ -21,11 +23,13 @@ namespace Assets.Scripts.Com.GUI
 		{
 			_instance.TweenAlpha (_instance._showColor, false);
 			_instance.SetImageState(true);
+			_instance._sceneCamera.SetState(false);
 		}
 
 		public static void Hide()
 		{
 			_instance.TweenAlpha(_instance._hideColor, true);
+			_instance._sceneCamera.SetState(true);
 		}
 
 		private void TweenAlpha(Color newColor, bool changeImageState)

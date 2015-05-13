@@ -9,26 +9,35 @@ namespace Assets.Scripts.Com.MyInput
 
 		[SerializeField] private LayerMask _raycastLayerMask = -1;
 		private Camera _camera;
+		private bool _enabled = true;
 
 		private void Awake()
 		{
 			_camera = gameObject.camera;
 		}
 
+		public void SetState(bool state)
+		{
+			_enabled = state;
+		}
+
 		private void Update()
 		{
-			if(Input.GetMouseButtonDown(0))
+			if(_enabled)
 			{
-				Vector3 _currentTouchPos = _camera.ScreenToWorldPoint(Input.mousePosition);
-
-				Ray ray = new Ray(_currentTouchPos, Vector3.forward);
-				RaycastHit hit;
-				if(Physics.Raycast(ray, out hit, RayDistance, _raycastLayerMask))
+				if(Input.GetMouseButtonDown(0))
 				{
-					AbstractInputObject elem = hit.collider.gameObject.GetComponent<AbstractInputObject>();
-					if(elem!=null)
+					Vector3 _currentTouchPos = _camera.ScreenToWorldPoint(Input.mousePosition);
+
+					Ray ray = new Ray(_currentTouchPos, Vector3.forward);
+					RaycastHit hit;
+					if(Physics.Raycast(ray, out hit, RayDistance, _raycastLayerMask))
 					{
-						elem.OnClick();
+						AbstractInputObject elem = hit.collider.gameObject.GetComponent<AbstractInputObject>();
+						if(elem!=null)
+						{
+							elem.OnClick();
+						}
 					}
 				}
 			}
