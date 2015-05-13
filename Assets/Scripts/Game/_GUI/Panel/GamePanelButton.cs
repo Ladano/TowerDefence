@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 namespace Assets.Scripts.Com.Game
 {
-	public class GamePanelButton : AbstractInputObject
+	public class GamePanelButton : AbstractGUIButton
 	{
 		private const string InfoString = "Fire rate = {0}\n Fire damage = {1}\n Fire distance = {2}";
 
 		[SerializeField] private TowerType _towerType;
-		[SerializeField] private TextMesh _infoLabel;
+		[SerializeField] private Text _infoLabel;
 		private TowerData _towerData;
 
 		private void Start()
