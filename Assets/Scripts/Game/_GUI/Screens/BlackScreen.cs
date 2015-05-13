@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 namespace Assets.Scripts.Com.GUI
 {
 	public class BlackScreen : MonoBehaviour
 	{
-		private const float ShowAlpha = 0.75f;
-		private const float HideAlpha = 0.0f;
-
 		private static BlackScreen _instance;
+		[SerializeField] private Color _showColor;
+		[SerializeField] private Color _hideColor;
+		[SerializeField] private Image _blackScreen;
 		[SerializeField] private float _showTime = 0.2f;
 
 		private void Awake()
@@ -18,20 +19,36 @@ namespace Assets.Scripts.Com.GUI
 
 		public static void Show()
 		{
-			TweenAlpha(ShowAlpha);
-			_instance.collider.enabled = true;
+			_instance.TweenAlpha (_instance._showColor, false);
+			_instance.SetImageState(true);
 		}
 
 		public static void Hide()
 		{
-			TweenAlpha(HideAlpha);
-			_instance.collider.enabled = false;
+			_instance.TweenAlpha(_instance._hideColor, true);
 		}
 
-		public static void TweenAlpha(float alpha)
+		private void TweenAlpha(Color newColor, bool changeImageState)
 		{
-			LeanTween.alpha(_instance.gameObject, alpha, _instance._showTime)
-				.setUseEstimatedTime(true);
+			if(changeImageState)
+			{
+				LeanTween.value (gameObject, _blackScreen.color, newColor, _showTime)
+					.setOnUpdate ((color) => _blackScreen.color = color)
+					.setOnComplete (SetImageState, false)
+					.setUseEstimatedTime (true);
+			}
+			else
+			{
+				LeanTween.value (gameObject, _blackScreen.color, newColor, _showTime)
+					.setOnUpdate ((color) => _blackScreen.color = color)
+					.setUseEstimatedTime (true);
+			}
+		}
+
+		private void SetImageState(object state)
+		{
+			_blackScreen.enabled = (bool)state;
 		}
 	}
 }
+

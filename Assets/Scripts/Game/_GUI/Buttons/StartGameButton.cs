@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Assets.Scripts.Com.Game
 {
-	public class StartGameButton : AbstractInputObject
+	public class StartGameButton : AbstractGUIButton	
 	{
 		public override void OnClick()
 		{
