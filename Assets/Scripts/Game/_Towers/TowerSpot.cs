@@ -16,6 +16,8 @@ namespace Assets.Scripts.Com.Game
 
 		public void BuildTower(TowerData towerData)
 		{
+			collider.enabled = false;
+
 			_tower = TowersController.GetTowerToBuild(towerData.Type);
 			_towerTransform = _tower.transform;
 			_towerTransform.parent = _buildSpot;
